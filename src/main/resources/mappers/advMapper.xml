@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!-- Last Edit 2017-02-16 
+	
+-->
+<mapper namespace="com.bluemingo.bluemingo.domain.AdvVOMapper">
+
+
+	<!-- 리스트 페이지 listAll -->
+	<select id="listAll_null" resultType="com.bluemingo.bluemingo.domain.AdvVO">
+		call advertise_listAll();
+	</select>
+	
+	<!-- 리스트 페이지 listAll 상단 광고 현황 조회 -->
+	<select id="listAll_count" resultType="com.bluemingo.bluemingo.domain.AdvVO">
+		call advertise_count();
+	</select>
+	
+	<!-- 리스트 페이지 listAll 검색 -->
+	<select id="search" resultType="com.bluemingo.bluemingo.domain.AdvVO">
+		call advertise_search(#{search_key}, #{search_table});
+	</select>
+	
+	
+
+</mapper>
+    

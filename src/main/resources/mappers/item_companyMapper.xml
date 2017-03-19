@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!-- Last Edit 2017-02-16 
+	
+-->
+<mapper namespace="com.bluemingo.bluemingo.domain.Item_companyVOMapper">
+
+    
+    <!-- 게시물 조회( 모든 게시물 조회 ) -->
+	<select id="listAll_null" resultType="com.bluemingo.bluemingo.domain.Item_companyVO">
+		call item_company_get(#{product_id});
+	</select>
+
+	<!-- 게시물 조회( 모든 게시물 조회 ) -->
+	<select id="listAll_item_id" resultType="com.bluemingo.bluemingo.domain.Item_companyVO">
+		call item_idCheck();
+	</select>
+	
+	<!-- 리스트 페이지 listAll 검색 -->
+	<select id="search" resultType="com.bluemingo.bluemingo.domain.Item_companyVO">
+		call item_search(#{item_id});
+	</select>
+	
+	<!-- 게시물 조회( 모든 게시물 조회 ) -->
+	<select id="procedure_insert" resultType="com.bluemingo.bluemingo.domain.Item_companyVO">
+		call insert_item(#{item_id},#{item_category_top},#{item_category_mid},#{item_category_bot}
+		,#{item_name},#{item_direct_price},#{item_sale_price},#{item_naver_price},#{item_inform}
+		,#{item_detail_inform},#{item_image},#{item_detail_image},#{company_key});
+	</select>
+	
+		<!-- 게시물 조회( 모든 게시물 조회 ) -->
+	<select id="procedure_create" resultType="com.bluemingo.bluemingo.domain.Item_companyVO">
+		call create_item_list(#{item_id},#{option_name},#{option_value},#{option_price});
+	</select>
+    
+    
+</mapper>
+    

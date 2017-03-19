@@ -1,0 +1,5 @@
+NotNull.advVO.adv_title = 광고 타이틀을 입력하세요!
+NotNull.advVO.adv_ticker = 광고 티커를 입력하세요!
+NotNull.advVO.adv_message = 광고 메시지를 입력하세요!
+NotNull.advVO.adv_image = 광고 이미지를 입력하세요!
+NotNull.advVO.adv_time = 광고 시간을 입력하세요!

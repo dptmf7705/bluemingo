@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluemingo.bluemingo.domain.ImageVOMapper">
+
+	<!-- 게시물 조회(bno에 해당하는 단일 게시물 조회) -->
+	<select id="procedure_create" resultType="Integer">
+		call create_image_file(#{original_file_name}, #{stored_file_name}, #{file_size});
+	</select>
+
+	
+	
+	<!-- 게시물 조회(bno에 해당하는 단일 게시물 조회) -->
+	<select id="read" resultType="com.bluemingo.bluemingo.domain.ImageVO">
+		select
+		*
+		from
+		image_file
+		where image_key =
+		#{image_key}
+	</select>
+
+
+
+</mapper>
+    

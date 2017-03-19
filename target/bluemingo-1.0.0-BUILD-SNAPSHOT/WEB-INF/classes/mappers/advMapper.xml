@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.bluemingo.bluemingo.domain.AdvVOMapper">
+
+<select id="getNow" resultType="String">
+	select now()
+</select>   
+    
+    
+<!-- 게시물 생성 *타임(TIME) 추가 해야함  -->
+<insert id="create">
+	insert into advertise (adv_title,adv_message,adv_ticker,adv_resource,product_product_key,adv_time)
+	values(#{adv_title}, #{adv_message}, #{adv_ticker}, #{adv_resource}, #{product_product_key}, #{adv_time})
+</insert>
+
+<!-- 게시물 조회(bno에 해당하는 단일 게시물 조회) -->
+<select id="read" resultType="com.bluemingo.bluemingo.domain.AdvVO">
+	select
+		*
+	from
+		advertise
+	where adv_key= #{adv_key}
+</select>
+
+<!-- 게시물 업데이트 -->    
+<update id="update">
+	update advertise 
+	set adv_title = #{adv_title}, adv_message = #{adv_message}, adv_ticker = #{adv_ticker},
+	adv_resource = #{adv_resource}, product_product_key = #{product_product_key}, adv_time = #{adv_time}
+	where adv_key = #{adv_key}
+</update>
+
+<!-- 게시물 삭제 -->
+<delete id="delete">
+	delete from advertise where adv_key = #{adv_key}
+</delete>
+
+<!-- 게시물 조회( 모든 게시물 조회 ) -->
+<select id="listAll" resultType="com.bluemingo.bluemingo.domain.AdvVO">
+	<![CDATA[
+	select
+		*
+	from
+		advertise
+	where adv_key>0
+	order by adv_key desc
+	limit 0, 20;
+	]]>
+</select>
+
+
+
+
+
+
+
+
+<!-- 게시물 조회( 무한 스크롤다운 ) 마지막 bno가 Integer타입으로 넘어오는 상태..그럼 컨트롤러에서는 bno-1에 해당하는 것을 dao로 넘겨줄 것이다. -->
+<select id="infiniteScrollDown" resultType="com.bluemingo.bluemingo.domain.AdvVO">
+	<![CDATA[
+	select
+		*
+	from
+		advertise
+	where adv_key <= #{adv_key}    
+	and adv_key > #{adv_key}-20
+	order by adv_key desc
+	]]>
+</select>
+
+<!-- 게시물 조회( 무한 스크롤  업) 물론 마지막  bno를 넘겨서 offset을 다르게 주어도 되지만 이론상 가장 첫째의 bno를 받아와서 그것보다 먼저의 게시물 20개를 가져오는게 자연스럽기 때문에 그렇게 구현하자.-->
+<select id="infiniteScrollUp" resultType="com.bluemingo.bluemingo.domain.AdvVO">
+	<![CDATA[
+	select
+		*
+	from
+		advertise
+	where adv_key >= #{adv_key}    
+	and adv_key < #{adv_key}+20
+	order by adv_key desc
+	]]>
+</select>
+
+
+
+  
+    
+    
+</mapper>
+    

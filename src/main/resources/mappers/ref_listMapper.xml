@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Last Edit 2017-02-16 
+	
+-->
+<mapper namespace="com.bluemingo.bluemingo.domain.Ref_listVOMapper">
+
+    
+    <!-- 게시물 조회( 모든 게시물 조회 ) -->
+	<select id="listAll_ref_list" resultType="com.bluemingo.bluemingo.domain.Ref_listVO">
+		call ref_list_get(#{search_key}, #{search_table});
+	</select>
+	
+	<!-- 게시물 조회( 모든 게시물 조회 ) -->
+	<select id="procedure_create" resultType="com.bluemingo.bluemingo.domain.SearchVO">
+		call create_item_list(#{item_id},#{option_name},#{option_value},#{option_price});
+	</select>
+	
+	<!-- 게시물 조회( 모든 게시물 조회 ) -->
+	<select id="procedure_delete" resultType="com.bluemingo.bluemingo.domain.SearchVO">
+		call delete_ref_list(#{search_key}, #{search_table});
+	</select>
+
+  
+    
+    
+</mapper>

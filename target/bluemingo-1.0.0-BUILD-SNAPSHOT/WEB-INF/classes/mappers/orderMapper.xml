@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluemingo.bluemingo.domain.OrderVOMapper">
+
+	<select id="getNow" resultType="String">
+		select now()
+	</select>
+
+
+	<!-- 게시물 생성 *타임(TIME) 추가 해야함 -->
+	<insert id="create">
+		insert into reservation
+		(user_user_key,trade_trade_key,product_product_key,
+		res_type,res_status,res_date,res_quantity,res_deli_code)
+		values(#{user_key},#{trade_key},#{product_key},#{res_type},
+		#{res_status},now(),#{res_quantity},#{res_deli_code});
+	</insert>
+
+	<!-- 게시물 조회(bno에 해당하는 단일 게시물 조회) -->
+	<select id="read" resultType="com.bluemingo.bluemingo.domain.OrderVO">
+		select
+		*
+		from
+		item
+		where item_key=
+		#{item_key}
+	</select>
+
+	<!-- 게시물 업데이트 -->
+	<update id="update">
+		update advertise
+		set item_name = #{item_name},
+		item_price = #{item_price}, item_detail =
+		#{item_detail},
+		item_image =
+		#{item_image}
+		where item_name = #{item_name}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete">
+		delete from item where item_key = #{item_key}
+	</delete>
+
+	<!-- 게시물 조회( 모든 게시물 조회 ) -->
+	<select id="listAll" resultType="com.bluemingo.bluemingo.domain.OrderVO">
+	<![CDATA[
+	select r.res_date, r.res_key, r.res_type, tplist.pkey, c.company_name, u.user_name, sum(i.item_price*r.res_quantity) as price, r.res_quantity, r.res_status
+	from reservation r, user u, company c, item i,
+	(select t.trade_key as tkey, t.product_key as pkey, p.item_item_key as ikey
+	from trade t, product p
+	where t.product_key = p.product_key) as tplist
+	where r.user_user_key = u.user_key 
+	and r.trade_trade_key = tplist.tkey
+	and tplist.ikey = i.item_key
+	and i.company_company_key = c.company_key
+	group BY r.res_key;
+	]]>
+	</select>
+
+	<select id="search" resultType="com.bluemingo.bluemingo.domain.OrderVO">
+	<![CDATA[
+	select r.res_date, r.res_key, r.res_type, tplist.pkey, c.company_name, u.user_name, sum(i.item_price*r.res_quantity) as price, r.res_quantity, r.res_status
+	from reservation r, user u, company c, item i,
+	(select t.trade_key as tkey, t.product_key as pkey, p.item_item_key as ikey
+	from trade t, product p
+	where t.product_key = p.product_key) as tplist
+	where r.user_user_key = u.user_key 
+	and r.trade_trade_key = tplist.tkey
+	and tplist.ikey = i.item_key
+	and i.company_company_key = c.company_key
+	]]>
+		<choose>
+			<when test='search_table == "user_name"'>
+				and u.user_name = #{search_key}
+				group BY r.res_key;
+			</when>
+			<when test="search_table == user_id">
+				and u.user_id = #{search_key}
+				group BY r.res_key;
+			</when>
+			<when test="search_table == user_phone">
+				and u.user_phone = #{search_key}
+				group BY r.res_key;
+			</when>
+			<when test="search_table == res_status">
+				and r.res_status = #{search_key}
+				group BY r.res_key;
+			</when>
+			<when test="search_table == user_key">
+				and u.user_key = #{search_key}
+				group BY r.res_key;
+			</when>
+			<when test="search_table == res_date">
+				and r.res_date = #{search_key}
+				group BY r.res_key;
+			</when>
+			<otherwise>
+
+			</otherwise>
+		</choose>
+	</select>
+
+
+
+
+	<!-- 게시물 조회( 무한 스크롤다운 ) 마지막 bno가 Integer타입으로 넘어오는 상태..그럼 컨트롤러에서는 bno-1에 
+		해당하는 것을 dao로 넘겨줄 것이다. -->
+	<select id="infiniteScrollDown" resultType="com.bluemingo.bluemingo.domain.OrderVO">
+	<![CDATA[
+	select
+		*
+	from
+		item
+	where item_key <= #{item_key}    
+	and item_key > #{item_key}-20
+	order by item_key desc
+	]]>
+	</select>
+
+	<!-- 게시물 조회( 무한 스크롤 업) 물론 마지막 bno를 넘겨서 offset을 다르게 주어도 되지만 이론상 가장 첫째의 bno를 
+		받아와서 그것보다 먼저의 게시물 20개를 가져오는게 자연스럽기 때문에 그렇게 구현하자. -->
+	<select id="infiniteScrollUp" resultType="com.bluemingo.bluemingo.domain.OrderVO">
+	<![CDATA[
+	select
+		*
+	from
+		item
+	where item_key >= #{item_key}    
+	and item_key < #{item_key}+20
+	order by item_key desc
+	]]>
+	</select>
+
+
+
+	<select id="findTest" resultType="com.bluemingo.bluemingo.domain.OrderVO">
+		SELECT u.user_key, u.user_name, u.user_phone, u.user_id,
+		p.product_key, r.res_type
+		FROM user u, product p, reservation r, trade
+		t
+		WHERE r.user_user_key = u.user_key
+		and r.trade_trade_key = t.trade_key
+		and t.product_key = p.product_key
+		<choose>
+			<when test="user_name != null">
+				AND u.user_name like #{user_name}
+			</when>
+			<when test="product_key != null">
+				AND p.product_key like #{product_key}
+			</when>
+			<otherwise>
+
+			</otherwise>
+		</choose>
+
+	</select>
+
+	<!-- <select id="findTest" resultType="com.bluemingo.bluemingo.domain.TestVO"> SELECT 
+		u.user_key, u.user_name, u.user_phone, u.user_id, p.product_key, r.res_type 
+		FROM user u, product p, reservation r, trade t WHERE r.user_user_key = u.user_key 
+		and r.trade_trade_key = t.trade_key and t.product_key = p.product_key <if 
+		test="user_name != null"> AND u.user_name like #{user_name} </if> <if test="product_key 
+		!= null"> AND p.product_key like #{product_key} </if> </select> -->
+
+
+
+
+</mapper>
+    
