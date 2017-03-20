@@ -18,15 +18,17 @@
 	
 	<http auto-config="true">
 		<csrf disabled="true"/>
-		<intercept-url pattern="/servlet/**" access="hasRole('ROLE_ADMIN')"/>
-		<intercept-url pattern="/**" access="permitAll"/>
+		<intercept-url pattern="/servlet/login/*" access="permitAll" />
+		<intercept-url pattern="/servlet/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/" access="permitAll" />
+		<intercept-url pattern="/**" access="permitAll" />
 		<form-login
 			username-parameter="loginId"
 			password-parameter="loginPassword"
 			login-page="/servlet/login/login"
-			default-target-url="/"/>
-		<logout logout-success-url="/" invalidate-session="true"
-			delete-cookies="JSESSIOND,SPRING_SECURITY_REMEMBER_ME_COOKIE"/>
+			default-target-url="/"
+			authentication-failure-url="/login/login?fail=true" />
+		<logout logout-success-url="/"/>
 	</http>
 
 	<authentication-manager>

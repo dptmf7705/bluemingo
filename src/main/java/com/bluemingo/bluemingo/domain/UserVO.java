@@ -7,12 +7,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserVO implements UserDetails{
+	private static final long serialVersionUID = 1L;
 	
 	private Integer user_key;
 	private String user_id;
 	private String user_password;
 	private String user_name;
-
+	
+	private String role_name;
+	
 	private List<RoleVO> authorities; // 권한 목록
 	
 	@Override
@@ -70,6 +73,7 @@ public class UserVO implements UserDetails{
 	}
 
 	public void setUser_id(String user_id) {
+		
 		this.user_id = user_id;
 	}
 
@@ -91,6 +95,14 @@ public class UserVO implements UserDetails{
 
 	public void setAuthorities(List<RoleVO> roles) {
 		this.authorities = roles;
+	}
+
+	public String getRole_name() {
+		return role_name;
+	}
+
+	public void setRole_name(String role_name) {
+		this.role_name = role_name;
 	}
 
 	

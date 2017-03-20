@@ -23,12 +23,12 @@ import com.bluemingo.bluemingo.persistence.UserDAO;
 
 @Service
 public class UserServiceImpl extends GenericServiceImpl<UserVO, Integer> implements UserService, UserDetailsService{
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
-
+	
 	@Autowired
 	private UserDAO userDao;
-
+	
 	public UserServiceImpl() {
 		
 	}
@@ -38,7 +38,7 @@ public class UserServiceImpl extends GenericServiceImpl<UserVO, Integer> impleme
 		super(genericDao);
 		this.userDao = (UserDAO) genericDao;
 	}
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("load user by username(ID) : " + username);
@@ -46,15 +46,12 @@ public class UserServiceImpl extends GenericServiceImpl<UserVO, Integer> impleme
 		SearchVO svo = new SearchVO();
 		svo.setSearch_key(username);
 		UserVO uvo = (UserVO) userDao.search(svo).get(0);
-		String role_name =(String) (userDao.procedure(svo, "get_role")).getResult();
-		
-		RoleVO role = new RoleVO(role_name);
 		
 		List<RoleVO> roles = new ArrayList<RoleVO>();
-		roles.add(role);
+		
+		roles.add(new RoleVO(uvo.getRole_name()));
 		uvo.setAuthorities(roles);
 		
 		return uvo;
 	}
-
 }

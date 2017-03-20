@@ -9,17 +9,8 @@
 -->
 <mapper namespace="com.bluemingo.bluemingo.domain.UserVOMapper">
 
-
 	<select id="search" resultType="com.bluemingo.bluemingo.domain.UserVO">
-		SELECT * 
-		FROM `user` 
-		WHERE user_id = #{search_key};
+		call user_search(#{search_key});
 	</select>
 	
-	<select id="procedure_get_role" resultType="String">
-		SELECT role_name
-		FROM `authority` 
-		WHERE user_id = #{search_key};
-	</select>
-
 </mapper>
