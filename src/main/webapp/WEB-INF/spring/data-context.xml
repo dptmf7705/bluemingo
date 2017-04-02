@@ -6,15 +6,15 @@
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- mySQL DB Connect : dbbluemingo.xyz-->
-<!-- 	
-	<bean id="dataSource"
+
+ 	<bean id="dataSource"
 	    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 	    <property name="url" value="jdbc:log4jdbc:mysql://211.43.203.78:3306/dbbluemingo"></property>
 		<property name="username" value="bluemingo"></property>
 		<property name="password" value="bluemingo1!2@"></property>
-	</bean> -->
-	
+	</bean>
+	 
 	<!-- mySQL DB Connect : top_db -->
 <!-- 
 	 <bean id="dataSource"
@@ -24,15 +24,15 @@
 		<property name="username" value="admin"></property>
 		<property name="password" value="topadv!@#123"></property>
 	</bean>  -->
-	
-	<bean id="dataSource"
+	<!-- 
+ 	<bean id="dataSource"
 	    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 	    <property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/securitydb"></property>
 		<property name="username" value="security"></property>
 		<property name="password" value="1234"></property>
 	</bean>
-	
+	 -->
 	<!-- SqlSessionFactoryBean Create -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	    <property name="configLocation" value="classpath:mybatis-config.xml"></property>

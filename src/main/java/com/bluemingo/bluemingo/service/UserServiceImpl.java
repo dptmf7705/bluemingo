@@ -24,7 +24,7 @@ import com.bluemingo.bluemingo.persistence.UserDAO;
 @Service
 public class UserServiceImpl extends GenericServiceImpl<UserVO, Integer> implements UserService, UserDetailsService{
 	
-	private static final Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	@Autowired
 	private UserDAO userDao;

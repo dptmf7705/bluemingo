@@ -1578,6 +1578,8 @@ a:focus {
 }
 .box.box-solid > .box-header .btn.btn-default {
   background: transparent;
+  width: 200px;
+  height: 300px;
 }
 .box.box-solid > .box-header .btn:hover,
 .box.box-solid > .box-header a:hover {

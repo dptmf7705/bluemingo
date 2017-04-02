@@ -16,34 +16,68 @@
 	<http pattern="/**/*.css" security="none" />
 	<http pattern="/images/*" security="none" />
 	
-	<http auto-config="true">
+<!-- 웹, 안드로이드 로그인 따로 운영 -->
+	
+	<!-- 웹 로그인 -->
+	<http auto-config="true" use-expressions="true">
 		<csrf disabled="true"/>
-		<intercept-url pattern="/servlet/login/*" access="permitAll" />
+		<access-denied-handler error-page="/servlet/login/accessDenied"/>
+		<intercept-url pattern="/servlet/login/**" access="permitAll" />
+		<intercept-url pattern="/servlet/android/*" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/servlet/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/" access="permitAll" />
 		<intercept-url pattern="/**" access="permitAll" />
 		<form-login
 			username-parameter="loginId"
 			password-parameter="loginPassword"
+			login-processing-url="/servlet/login/loginProcess"
 			login-page="/servlet/login/login"
 			default-target-url="/"
-			authentication-failure-url="/login/login?fail=true" />
-		<logout logout-success-url="/"/>
+			authentication-failure-url="/servlet/login/login?fail=true"
+			authentication-success-handler-ref="LoginSuccessHandler"/>
+		<logout 
+			logout-success-url="/"
+			logout-url="/servlet/login/logout"/>
+		<session-management>
+			<concurrency-control max-sessions="1"/>
+		</session-management>
 	</http>
+ 
+	<!-- 안드로이드 로그인
+	<http pattern="/servlet/android/**" auto-config="true">
+		<csrf disabled="true" />
+		<intercept-url pattern="/servlet/android/login*" access="permitAll"/>
+		<intercept-url pattern="/servlet/android/*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+		<intercept-url pattern="/" access="permitAll" />
+		<intercept-url pattern="/**" access="permitAll" />
+		<form-login 
+			username-parameter="loginId"
+			password-parameter="loginPassword" 
+			login-processing-url="/servlet/android/loginProcess"
+			default-target-url="/servlet/android/loginSuccess" 
+			authentication-failure-url="/servlet/android/loginFail" />
+		<logout 
+			logout-success-url="/servlet/android/loginTest" 
+			logout-url="/servlet/android/logout"/>
+	</http> -->
 
 	<authentication-manager>
 		<authentication-provider user-service-ref="UserServiceImpl">
-		<!-- 	<password-encoder ref="encoder" /> -->
+		<!-- 패스워드 암호화	<password-encoder ref="encoder" /> -->
 		</authentication-provider>
 	</authentication-manager>
 
 	<beans:bean id="UserServiceImpl" class="com.bluemingo.bluemingo.service.UserServiceImpl"/>
-	<!-- password 암호화 -->
+	<!-- password 인코더 -->
     <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
- <!--    
-    login Success&Failure
-    <beans:bean id="customAuthenticationSuccessHandler" class="com.test.sample.login.customAuthenticationSuccessHandler"/>
-    <beans:bean id="customAuthenticationFailureHandler" class="com.test.sample.login.customAuthenticationFailureHandler"/>
- -->
+ 
+ 	<!-- 로그인 성공 핸들러 -->
+    <beans:bean id="LoginSuccessHandler" 
+   		class="com.bluemingo.bluemingo.controller.LoginSuccessHandler">
+    	<beans:property name="targetUrlParameter" value="loginRedirect"/>
+    	<beans:property name="useReferer" value="false"/>
+    	<beans:property name="defaultUrl" value="/"/>
+    </beans:bean>
+
  
 </beans:beans>

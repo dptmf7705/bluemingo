@@ -1,5 +1,8 @@
 package com.bluemingo.bluemingo.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +15,15 @@ import com.bluemingo.bluemingo.service.UserService;
 @Controller
 @RequestMapping("/servlet/login/*")
 public class LoginController {
-	private static final Logger logger = LoggerFactory.getLogger(AdvController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public void login(){
-		logger.info("login is called.......");
-		
+		logger.info("web login is called.......");
+	}	
+	@RequestMapping(value="/accessDenied")
+	public void accessDenied(){
+		logger.info("web accessDenied is called.......");
 	}
+
 }

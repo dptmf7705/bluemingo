@@ -2,36 +2,38 @@ package com.bluemingo.bluemingo.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.jaas.SecurityContextLoginModule;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bluemingo.bluemingo.domain.AdvVO;
 import com.bluemingo.bluemingo.domain.ImageVO;
 import com.bluemingo.bluemingo.domain.Item_companyVO;
-import com.bluemingo.bluemingo.domain.OrderVO;
+import com.bluemingo.bluemingo.domain.LoginVO;
 import com.bluemingo.bluemingo.domain.Ref_listVO;
 import com.bluemingo.bluemingo.domain.SearchVO;
+import com.bluemingo.bluemingo.domain.UserVO;
 import com.bluemingo.bluemingo.service.AdvService;
 import com.bluemingo.bluemingo.service.ImageService;
 import com.bluemingo.bluemingo.service.Item_companyService;
@@ -58,8 +60,6 @@ public class AndroidController {
     @Autowired(required = true)
     private Ref_listService ref_listService;
 		
-	
-	
 	
 	@RequestMapping(value="/test")
 	public void androidTest() {
@@ -94,8 +94,38 @@ public class AndroidController {
 		return author;
 	}*/
 	
-
+	@RequestMapping(value="/loginTest")
+	public void loginTest(){
+		logger.info("android loginTest called ......");
+		
+	}
 	
+	@RequestMapping(value="/login")
+	public String login(@RequestBody LoginVO login){
+		logger.info("android login called ......");
+		return "/servlet/android/loginProcess";
+	}
+	
+	@RequestMapping(value="/loginFail")
+	@ResponseBody
+	public String loginFail(){
+		logger.info("android login fail ......");
+		
+		return "login fail";
+	}
+	
+	@RequestMapping(value="/loginSuccess")
+	@ResponseBody
+	public UserVO loginSuccess(){
+		logger.info("android login success.......");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserVO user = null;
+		Object principal = auth.getPrincipal();
+		if(principal != null && principal instanceof UserVO){
+			user = (UserVO)principal;
+		}
+		return user;
+	}
 
 	/** 2017-02-20
 	 * 안드로이드-제품리스트 조회

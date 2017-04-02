@@ -34,6 +34,7 @@ import com.bluemingo.bluemingo.service.Ref_listService;
  */
 @Secured("ROLE_USER")
 @Controller
+
 @RequestMapping("/servlet/advertise/*")
 public class AdvController {
  

@@ -3,16 +3,22 @@ package com.bluemingo.bluemingo.domain;
 import java.util.Collection;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserVO implements UserDetails{
 	private static final long serialVersionUID = 1L;
 	
+	@NotNull
 	private Integer user_key;
 	private String user_id;
 	private String user_password;
 	private String user_name;
+	private String user_phone;
+	private Integer product_key;
+	private Integer res_type;
 	
 	private String role_name;
 	
@@ -103,6 +109,30 @@ public class UserVO implements UserDetails{
 
 	public void setRole_name(String role_name) {
 		this.role_name = role_name;
+	}
+
+	public String getUser_phone() {
+		return user_phone;
+	}
+
+	public void setUser_phone(String user_phone) {
+		this.user_phone = user_phone;
+	}
+
+	public Integer getProduct_key() {
+		return product_key;
+	}
+
+	public void setProduct_key(Integer product_key) {
+		this.product_key = product_key;
+	}
+
+	public Integer getRes_type() {
+		return res_type;
+	}
+
+	public void setRes_type(Integer res_type) {
+		this.res_type = res_type;
 	}
 
 	
