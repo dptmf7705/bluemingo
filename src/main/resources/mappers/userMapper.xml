@@ -14,7 +14,7 @@
 		call user_search(#{search_key});
 	</select>
 
-	<select id="procedure_insert" resultType="com.bluemingo.bluemingo.domain.UserVO">
+	<select id="procedure_insert_user" resultType="com.bluemingo.bluemingo.domain.UserVO">
 		call user_create(#{user_id}, #{user_password}, #{user_name}, #{user_phone});
 	</select>
 	

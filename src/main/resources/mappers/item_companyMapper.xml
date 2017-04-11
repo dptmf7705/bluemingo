@@ -22,14 +22,20 @@
 	
 	<!-- 리스트 페이지 listAll 검색 -->
 	<select id="search" resultType="com.bluemingo.bluemingo.domain.Item_companyVO">
-		call item_search(#{item_id});
+		call item_company_search(#{search_key}, #{search_table});
 	</select>
 	
 	<!-- 게시물 조회( 모든 게시물 조회 ) -->
-	<select id="procedure_insert" resultType="com.bluemingo.bluemingo.domain.Item_companyVO">
+	<select id="procedure_insert_item" resultType="com.bluemingo.bluemingo.domain.Item_companyVO">
 		call insert_item(#{item_id},#{item_category_top},#{item_category_mid},#{item_category_bot}
 		,#{item_name},#{item_direct_price},#{item_sale_price},#{item_naver_price},#{item_inform}
 		,#{item_detail_inform},#{item_image},#{item_detail_image},#{company_key});
+	</select>
+	
+	<!-- 게시물 조회( 모든 게시물 조회 ) -->
+	<select id="procedure_insert_company" resultType="com.bluemingo.bluemingo.domain.Item_companyVO">
+		call insert_company(#{company_name},#{company_address},#{company_president},#{company_phone}
+		,#{company_prephone},#{company_serial},#{company_homepage},#{company_type},#{company_detail});
 	</select>
 	
 		<!-- 게시물 조회( 모든 게시물 조회 ) -->

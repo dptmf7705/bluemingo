@@ -124,7 +124,7 @@ function testOp(){
 </head>
 <body>
 
-<div class="box">
+<div class="box" style="border-top:0px">
 
 <form:form role="form" commandName="Item_companyVO" name="ItemData" method="post" enctype="multipart/form-data">
 	<div class="box-tools">

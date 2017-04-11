@@ -1,16 +1,12 @@
 package com.bluemingo.bluemingo.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -39,7 +35,6 @@ import com.bluemingo.bluemingo.service.Item_companyService;
 import com.bluemingo.bluemingo.service.OrderService;
 import com.bluemingo.bluemingo.service.Ref_listService;
 import com.bluemingo.bluemingo.service.UserService;
-import com.mysql.fabric.Response;
 
 @Controller
 @RequestMapping("/servlet/android/*")
@@ -60,9 +55,10 @@ public class AndroidController {
     
     @Autowired(required = true)
     private Ref_listService ref_listService;
-		
+
     @Autowired(required = true)
     private UserService userService;
+	
 	
 	@RequestMapping(value="/test")
 	public void androidTest() {
@@ -96,6 +92,7 @@ public class AndroidController {
 		author = "denied";
 		return author;
 	}*/
+	
 	
 	/** 안드로이드 로그인 테스트용 */
 	@RequestMapping(value="/loginTest")
@@ -140,7 +137,7 @@ public class AndroidController {
 	public UserVO singIn(@RequestBody UserVO uservo){
 		logger.info("android createUser called.......");
 		
-		return userService.insertProcedure(uservo);
+		return userService.insertProcedure(uservo, "user");
 	}
 	
 	@RequestMapping(value="/idCheck")
@@ -163,8 +160,9 @@ public class AndroidController {
 		model.addAttribute("loginId", lvo.getLoginId());
 		model.addAttribute("loginPassword", lvo.getLoginPassword());
 	}
+
 	
-	
+
 	/** 2017-02-20
 	 * 안드로이드-제품리스트 조회
 	 */

@@ -1530,6 +1530,7 @@ a:focus {
   border-radius: 3px;
   background: #ffffff;
   border-top: 3px solid #d2d6de;
+  border-bottom: 3px solid #d2d6de;
   margin-bottom: 20px;
   width: 100%;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -1578,8 +1579,6 @@ a:focus {
 }
 .box.box-solid > .box-header .btn.btn-default {
   background: transparent;
-  width: 200px;
-  height: 300px;
 }
 .box.box-solid > .box-header .btn:hover,
 .box.box-solid > .box-header a:hover {
@@ -1759,6 +1758,7 @@ a:focus {
 .btn-box-tool {
   padding: 5px;
   font-size: 12px;
+  border-bottom: 3px solid #d2d6de;
   background: transparent;
   color: #97a0b3;
 }

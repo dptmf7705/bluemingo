@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.bluemingo.bluemingo.domain.AdvVO;
 import com.bluemingo.bluemingo.domain.Item_companyVO;
 import com.bluemingo.bluemingo.domain.Ref_listVO;
 import com.bluemingo.bluemingo.generic.GenericDAO;
 import com.bluemingo.bluemingo.generic.GenericServiceImpl;
+import com.bluemingo.bluemingo.persistence.AdvDAO;
 import com.bluemingo.bluemingo.persistence.Ref_listDAO;
 
 /** Last Edit 2017-02-12

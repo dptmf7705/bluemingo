@@ -33,8 +33,8 @@ private static final Logger logger = LoggerFactory.getLogger(Item_companyService
 	}
 	
 	@Override
-	public List<Item_companyVO> listAll_ref_list(SearchVO svo, String PREFIX) {
-		return listAll_ref_list(svo, PREFIX);
-	}
+		public List<Item_companyVO> listAll_ref_list(SearchVO svo, String PREFIX) {
+			return listAll_ref_list(svo, PREFIX);
+		}
 	
 }

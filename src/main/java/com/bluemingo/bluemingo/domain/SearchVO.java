@@ -10,8 +10,6 @@ public class SearchVO {
 	//����
 	private String user_name;
 	private String product_id;
-	
-	private String role_name;
 	//private Integer user_phone;
 	//������
 	private Integer adv_key;

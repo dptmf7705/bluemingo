@@ -41,8 +41,8 @@ public abstract class GenericServiceImpl<E, K>
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-	public E insertProcedure(E vo){
-    	return genericDao.insertProcedure(vo);
+	public E insertProcedure(E vo, String PREFIX){
+    	return genericDao.insertProcedure(vo, PREFIX);
     }
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

@@ -24,7 +24,7 @@ public class UserController {
 	public UserVO singIn(UserVO uservo){
 		logger.info("android createUser called.......");
 		
-		return userService.insertProcedure(uservo);
+		return userService.insertProcedure(uservo, "user");
 	}
 	
 }

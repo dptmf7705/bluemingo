@@ -12,7 +12,7 @@ public interface GenericService<E, K> {
 	
 	public SearchVO deleteProcedure(SearchVO svo);
 	public SearchVO createProcedure(E vo);
-	public E insertProcedure(E vo);
+	public E insertProcedure(E vo, String PREFIX);
 	public SearchVO updateProcedure(E vo);
 	public SearchVO procedure(SearchVO svo, String PREFIX);
 	

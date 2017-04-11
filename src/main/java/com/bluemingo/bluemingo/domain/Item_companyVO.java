@@ -1,5 +1,7 @@
 package com.bluemingo.bluemingo.domain;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /** Last Edit 2017-02-15 
@@ -45,7 +47,7 @@ public class Item_companyVO {
 	// html 식별용 num
 	private Integer table_num;
 	
-	
+
 	public Integer getTable_num() {
 		return table_num;
 	}

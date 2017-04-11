@@ -45,12 +45,11 @@ public class ImageServiceImpl extends GenericServiceImpl<ImageVO, Integer> imple
 	 * DB에 전달 후 성공이면 해당 cvo리턴
 	 */
 	@Override
-	public ImageVO imageCreate(HttpServletRequest request) throws Exception {
+	public ImageVO imageInsert(HttpServletRequest request) throws Exception {
 		ImageVO cvo = null;
-		Integer status = null;
 		cvo = fileUtils.parseInsertFileInfo(request);
 		
-		if((status = (Integer)imageDao.createProcedure(cvo).getResult()) != null)
+		if(imageDao.insertProcedure(cvo,null) != null)
 		{
 			return cvo;
 		}

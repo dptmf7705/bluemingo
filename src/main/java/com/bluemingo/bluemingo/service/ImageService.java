@@ -7,6 +7,6 @@ import com.bluemingo.bluemingo.generic.GenericService;
 
 public interface ImageService extends GenericService<ImageVO, Integer> {
 	
-	public ImageVO imageCreate(HttpServletRequest request) throws Exception;
+	public ImageVO imageInsert(HttpServletRequest request) throws Exception;
 	
 }

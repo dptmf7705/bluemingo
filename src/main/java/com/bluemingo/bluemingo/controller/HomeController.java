@@ -7,14 +7,14 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bluemingo.bluemingo.domain.UserVO;
+import com.bluemingo.bluemingo.generic.GenericServiceImpl;
+import com.bluemingo.bluemingo.service.AdvService;
 
 /**
  * Handles requests for the application home page.
@@ -37,21 +37,6 @@ public class HomeController {
 		
 		return "home";
 	}
-	
-/*	@RequestMapping(value="/**")
-	public void getUser(Model model){
-		logger.info("getUser called.......");
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		UserVO user = null;
-		Object principal = auth.getPrincipal();
-		if(principal != null && principal instanceof UserVO){
-			user = (UserVO)principal;
-		}
-		
-		model.addAttribute("userVO", user);
-	}*/
-	
 	
 	/*@RequestMapping(value="/home", method = RequestMethod.GET)
 	public void homeReturn(Locale locale, Model model){

@@ -1,16 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!-- jstl forEach  -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- jstl 날짜 fotmat -->
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
-
-<%@include file="../header.jsp"%>​
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!doctype html>
+<html lang="ko">
 <head>
+<!-- 
+* Last Edit 2017-03-09
+* 
+
+ -->
+
+<%@ include file="../header.jsp"%>
+
+<meta charset="utf-8">
+<title>BlueMingo</title>
 <style>
 .small1 {
 	width: 100px;
@@ -37,24 +40,48 @@ function readSearch(){
 	$("#contents").load(load_url);
 	
 }
+function loadContents(url){
+	var load_url = "/servlet/crud/"+url;
+	$("#contents").load(load_url);
+}
 </script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Top adv</title>
 </head>
 <body>
+<div class="box">
 
-<div class="box-tools" class="centered">
-	<form class="input-search" name="search_form" role="form" method="get">
-		<label for="input_item_data">KEY or ID</label>
-		<input id="search_key" name="search_key" >
-		<input type="hidden" id ="search_table" value="item_id">
-		<input type="button" style="width: 30pt; height: 20pt" onclick="readSearch()" value="검색">
-	</form>
+	<div class="box-search" >
+	<div  style="margin-top:10px">
+		<button type="submit" onclick="loadContents('companyCreate')" class="btn btn-default">판매자</button>
+		<button type="submit" onclick="loadContents('itemCreate')" class="btn btn-default">제품</button>
+		<button type="submit" onclick="loadContents('productCreate')" class="btn btn-default">묶음</button>
+		<button type="submit" onclick="loadContents('advCreate')" class="btn btn-default">광고</button>
+	</div>
+	<div class="table-search">
+	<table>
+	<tr>
+		<td><label for="input_item_data" style="margin-right:10px">KEY or ID</label></td>
+		<td><form class="centered" name="search_form" role="form" method="get">
+			<input id="search_key" class="form-control" name="search_key" >
+			<input type="hidden" id ="search_table" value="item_id">
+		</form></td>
+		<td><Button class="btn btn-default" style="margin-left:10px" onclick="readSearch()">검색</Button></td>
+	</tr>
+	</table>
+	</div>
+	</div>
+
+	<div class="box-body">
+		<div id="contents">
+		</div>
+	</div>
+	
+	<div class="box-footer">
+	
+	</div>
+
 </div>
-
-<div id="contents">
-</div>
-
 </body>
 </html>

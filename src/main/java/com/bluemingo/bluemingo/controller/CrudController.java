@@ -62,7 +62,10 @@ public class CrudController {
 	@Autowired(required = true)
 	private ImageService imageService;
 	
-	
+	/** Last Edit 2017-03-03 
+	 *  All Controller must have this Method
+	 *  webPage msg Controller(to javaScript)
+	 */	
 	public void msgCreate(String purpose, String from, String status, Object value,
 			RedirectAttributes rttr, Model model){
 		
@@ -93,7 +96,7 @@ public class CrudController {
 		if(request == null){
 			return "fail";
 		}else{
-			if((cvo = imageService.imageCreate(request)) == null) {
+			if((cvo = imageService.imageInsert(request)) == null) {
 				logger.info("image upload fail");
 				return "fail";
 			}
@@ -103,6 +106,75 @@ public class CrudController {
 			}
 		}
 	}// imageUploadPost()
+	
+	/** Last Edit 2017-03-09 
+	 *  Company Create 
+	 *  CreateGet
+	 */	
+	@RequestMapping(value="/companyCreate", method = RequestMethod.GET)
+	public void companyCreateGet(Model model) {
+		logger.info("companyCreateGet is called..... ");
+		
+	}// itemCreateGET()
+	
+	/** Last Edit 2017-03-09 
+	 *  Company Create 
+	 *  CreatePost
+	 */	
+	@RequestMapping(value="/companyCreate", method = RequestMethod.POST)
+	public String companyCreatePost(Item_companyVO vo, RedirectAttributes rttr) throws Exception{
+		logger.info("companyCreatePost is called..... ");
+		Item_companyVO icVO = null;
+		
+		if(vo != null){
+			logger.info("create ICVO data : "+vo.getCompany_name());
+			
+			try{
+				icVO = item_companyService.insertProcedure(vo,"company");
+			}catch(Exception e){
+				e.printStackTrace();
+				
+				msgCreate("create", "company", "fail", "잘못된 데이터", rttr, null);
+				return "redirect:/servlet/crud/companyCreate";
+			}
+			logger.info("companyCreatePost success");
+			msgCreate("create", "company", "success", "판매자 삽입", rttr, null);
+			rttr.addAttribute("company_key", icVO.getCompany_key());
+			return "redirect:/servlet/crud/companyUpdate";
+		}else{
+			// 데이터가 전달이 안되었을 경우 즉 NO DATA
+			// 다시 처음부터!, 업로드된 이미지 모두 삭제.
+			logger.info("companyCreatePost fail");
+			msgCreate("create", "company", "fail_no_data", "다시 시도해주세요", rttr, null);
+			return "redirect:/servlet/crud/companyCreate";
+		}
+	}// companyCreatePost()
+	
+	/** Last Edit 2017-03-09 
+	 *  Company Update 
+	 *  UpdateGet
+	 */	
+	@RequestMapping(value="/companyUpdate", method = RequestMethod.GET)
+	public String companyUpdateGet(@RequestParam("company_key")Integer company_key, Model model, RedirectAttributes rttr){
+		logger.info("companyUpdateGet is called..... ");
+		SearchVO svo = new SearchVO();
+		if(company_key != null){
+			
+			logger.info("companyUpdateGet companyVO search......");
+			svo.setCompany_key(company_key);
+			List<Item_companyVO> ic_list = item_companyService.search(svo);			
+			
+			
+			if(!ic_list.isEmpty()){
+				model.addAttribute("icVO", ic_list.get(0));
+				msgCreate("read", "company", "success", "판매자 조회", null, model);
+			}else{
+				msgCreate("read", "company", "fail_no_data", "판매자 조회", rttr, null);
+				return "redirect:/servlet/crud/multiRead";
+			}
+		}
+		return null;
+	}// companyUpdateGet()
 	
 	/** Last Edit 2017-02-26 
 	 *  Item Create - option(Ref_list)
@@ -153,7 +225,7 @@ public class CrudController {
 			logger.info("create ICVO data : "+vo.getItem_name());
 			
 			try{
-				icVO = item_companyService.insertProcedure(vo);
+				icVO = item_companyService.insertProcedure(vo,"item");
 			}catch(Exception e){
 				e.printStackTrace();
 				//데이터 삽입 실패한 경우 필요 데이터가 없거나 DB문제, MySqal query문제 등등
@@ -219,6 +291,7 @@ public class CrudController {
 			// 데이터가 전달이 안되었을 경우 즉 NO DATA
 			// 다시 처음부터!, 업로드된 이미지 모두 삭제.
 			logger.info("itemCreatePOST fail");
+			msgCreate("create", "item", "fail_no_data", "다시 시도해주세요", rttr, null);
 			return "redirect:/servlet/crud/itemCreate";
 		}
 	}// itemCreatePOST()
@@ -247,18 +320,22 @@ public class CrudController {
 				msgCreate("read", "item", "success", item_id, null, model);
 			}else{
 				msgCreate("read", "item", "fail_no_data", item_id, rttr, null);
-				return "redirect:/servlet/crud/itemCreate";
+				return "redirect:/servlet/crud/multiRead";
 			}
 		}
 		return null;
-	}// itemUpdatePost()
+	}// itemUpdateGet()
+	
+	/**
+	 * updatePost 미구현되있네 ? ㅅㅂ
+	 */
 	
 	
 	/** Last Edit 2017-03-02
 	 *  Multi Read - search_data get
 	 */	
 	@RequestMapping(value="/multiRead", method = RequestMethod.GET)
-	public void multiRead2(Model model, RedirectAttributes rttr){
+	public void multiRead(Model model, RedirectAttributes rttr){
 		
 	}
 	
@@ -266,7 +343,7 @@ public class CrudController {
 	 *  Multi Read Search - company,product,item,advertise - to _Update
 	 */	
 	@RequestMapping(value="/multiReadSearch", method = RequestMethod.GET)
-	public String multiRead(SearchVO svo, Model model, RedirectAttributes rttr){
+	public String multiReadSearch(SearchVO svo, Model model, RedirectAttributes rttr){
 		logger.info("multiRead searchKey : "+svo.getSearch_key());
 		if(svo.getSearch_key() != null){
 			if(svo.getSearch_table().equals("item_id")){
@@ -277,21 +354,6 @@ public class CrudController {
 		return null;
 	}
 
-	@RequestMapping(value="/advCreate", method = RequestMethod.GET)
-	public void testG(Item_companyVO vo, RedirectAttributes rttr) throws Exception{
-		logger.info("advCreateGet is called..... ");
-
-	}
-	@RequestMapping(value="/advCreate", method = RequestMethod.POST)
-	public void testP(Item_companyVO vo, RedirectAttributes rttr) throws Exception{
-		logger.info("advCreatePost is called..... ");
-		logger.info("create ICVO data : "+vo.getItem_name());
-		logger.info("create ICVO data : "+vo.getItem_sale_price());
-		
-		if(vo.getOption_list() != null){
-			logger.info("option_list : "+vo.getOption_list().get(0).getOption_name());
-		}
-	}
 	
 	/*
 	@RequestMapping(value="/itemUpdate", method = RequestMethod.GET)

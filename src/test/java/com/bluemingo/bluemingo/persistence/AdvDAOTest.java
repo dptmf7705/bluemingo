@@ -5,12 +5,17 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.inject.Inject;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
 
 import org.junit.Test;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -29,6 +34,10 @@ import com.bluemingo.bluemingo.service.Item_companyService;
 import com.bluemingo.bluemingo.service.Ref_listService;
 import com.bluemingo.bluemingo.util.CommonUtils;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.lang.reflect.*;
+
 
 public class AdvDAOTest extends AbstractTest{
 
@@ -42,16 +51,170 @@ public class AdvDAOTest extends AbstractTest{
 	@Autowired(required = true)
     private Ref_listService ref_listService;
 	
+	@Autowired(required = true)
+    private AdvService advService;
+	
+	/*@Test
+	public void getName() {
+		try{
+			Class cls = Class.forName("com.bluemingo.bluemingo.domain.AdvVO");
+			
+			Field fieldList[] = cls.getDeclaredFields();
+			
+			for(int i=0; i<fieldList.length; i++){
+				Field fld = fieldList[i];
+				System.out.println("name : "+fld.getName());
+				System.out.println("decl class = " +
+                        fld.getDeclaringClass());
+            System.out.println("type : " + fld.getType());
+            int mod = fld.getModifiers();
+            System.out.println("modifiers : " +
+                       Modifier.toString(mod));
+            System.out.println("-----");
+			}
+		}catch(Throwable e){
+			System.err.println(e);
+		}
+	}*/
 	@Test
-	public void optionList() {
-		SearchVO svo = new SearchVO();
-		svo.setItem_id("i2017_02_27_0");			
+    public void testJson() throws IOException {
+        JsonParsing<AdvVO> parser = new JsonParsing<AdvVO>(AdvVO.class);
+
+        
+        ArrayList<AdvVO> list = parser.getResult(testJsonData());
+
+        for(AdvVO vo : list) {
+            System.out.println(vo.getAdv_title());
+        }
+    }
+	/*
+	@Test
+	public void jsonTest(){
+		AdvVO vo = new AdvVO();
+		JsonParsing<AdvVO> jsonParsing = new JsonParsing<AdvVO>((Class<AdvVO>) vo.getClass(), vo);
 		
-		int count = 0;
-		svo = ref_listService.deleteProcedure(svo);
-		System.out.println("count : "+svo.getResult());
+		ArrayList<AdvVO> avo = null;
+		try {
+			avo = jsonParsing.getResult(testJsonData());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("data result : "+avo.get(0).getAdv_title());
+
+	}*/
+	
+	public String testJsonData(){
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("adv_key", 1);
+		jsonObject.put("adv_image", "abcdimage");
+		jsonObject.put("adv_title", "title");
+		jsonObject.put("adv_ticker", "ticker");
+		Calendar cal = Calendar.getInstance();
+		TimeZone zone = TimeZone.getTimeZone("Asia/Seoul");
+		cal.setTimeZone(zone);
+		long  now_time = cal.getTimeInMillis();
+		Date date = new Date(now_time);
+		//jsonObject.put("adv_time", (Object)date);
+		jsonObject.put("adv_message", "message");
+		jsonObject.put("product_id", "p2017_01_29_1");
+		jsonObject.put("product_direct_price", 1000);
+		jsonObject.put("product_sale_price", 900);
+		jsonObject.put("product_naver_price", 950);
+		jsonObject.put("product_min", 3);
+		jsonObject.put("deliver_company", 1);
+		jsonObject.put("deliver_price", 2500);
+		/*String json = "[{\"adv_key\":1, \"adv_image\":'A', \"adv_title\":'title1'},\n" +
+                "        {\"adv_key\":2, \"adv_image\":'B', \"adv_title\":'title2'},\n" +
+                "        {\"adv_key\":3, \"adv_image\":'C', \"adv_title\":'title3'},\n" +
+                "        {\"adv_key\":4, \"adv_image\":'D', \"adv_title\":'title4'},\n" +
+                "        {\"adv_key\":5, \"adv_image\":'E', \"adv_title\":'title5'}]";*/
+		
+		StringWriter out = new StringWriter();
+		JSONArray jarray = new JSONArray();
+		jarray.add(jsonObject);
+		jarray.add(jsonObject);
+		jarray.add(jsonObject);
+		jarray.add(jsonObject);
+		jarray.write(out);
+		System.out.println(jarray);
+		//jsonObject.write(out);
+		return out.toString();
 	}
 	
+	/*
+	@Test
+	public void setValue(){
+		*//**
+		 * dataVO 클래스의 변수들을 설정할때마다 모든 겟셋 메소드를 일일이 조작하는건 귀찮다.
+		 * VO클래스의 겟셋 메소드는 해당 변수명과 연관성이 존재한다.
+		 * 클래스에 정의된 메소드의 이름을 알아오는 방법이 존재한다.
+		 * getDeclaredMethod()를 이용하면 된다.
+		 * 이는 Method methlist[]에 모두 담을 수 있다.
+		 * Method.invoke로 실행할 수 있다.
+		 * 이들을 이용하면 VO를 Object로 받아와서 메소드명을 string.substring으로 set이 있는것만 실행
+		 * JSON파싱의 경우 위에서 실행,해당 변수명으로 파싱 후 넘기면 된다 이때 오브젝트로 받아오는데 이 또한 변수타입 겟하여 설정
+		 *//*
+		Ref_listVO vo = new Ref_listVO();
+		Ref_listVO refVO = new Ref_listVO();
+		refVO.setRef_list_key(1);
+		refVO.setRef_id("ref_id");
+		refVO.setItem_id("item_id");
+		refVO.setOption_name("opt_name");
+		refVO.setOption_price(100);
+		refVO.setOption_value("opt_value");
+		
+		String method_name = null;
+		Field fld = null;
+		try{
+			Class cls = Class.forName("com.bluemingo.bluemingo.domain.Ref_listVO");
+			
+			Object obj = null;
+			Method methList[] = cls.getDeclaredMethods();
+			Field fieldList[] = cls.getDeclaredFields();
+			for(int i=0;i<methList.length;i++){
+				method_name = methList[i].getName();
+				if(method_name.contains("set")){
+					fld = valueSearch(fieldList, method_name);
+					
+					obj = fld.getName();
+					System.out.println("type : "+fld.getType());
+					if(fld.getType() == Integer.class){
+						obj = (Integer)fld.get(obj);
+					}
+					
+					methList[i].invoke(vo, obj);
+					System.out.println("method : "+method_name+" value : "+fld.getName());
+				}
+			}
+			
+		}catch(Throwable e){
+			System.err.println(e);
+		}
+		
+		System.out.println("data : "+vo.getRef_list_key());
+		System.out.println("data : "+vo.getRef_id());
+		System.out.println("data : "+vo.getItem_id());
+		System.out.println("data : "+vo.getOption_name());
+		System.out.println("data : "+vo.getOption_value());
+		System.out.println("data : "+vo.getOption_price());
+		System.out.println("data : "+vo.getCount());
+		
+	}
+	
+	public Field valueSearch(Field[] fieldList, String method_name){
+		String value = method_name.substring(3).toLowerCase();
+		for(int i=0; i<fieldList.length; i++){
+			if(fieldList[i].getName().equals(value)){
+				return  fieldList[i];
+			}
+		}
+		return null;
+	}*/
 	
 	/*@Test
 	public void test() {

@@ -113,6 +113,18 @@ table.text-center th {
 	background: #faab94;
 }
 
+.box-search{
+	border-bottom: 3px solid #d2d6de;
+	height: 48px;
+}
+.table-search{
+	position: absolute;
+	top:0;
+	right: 0;
+	margin-top:10px;
+	margin-bottom:10px
+}
+
 .board_list {width:100%;border-top:2px solid #252525;border-bottom:1px solid #ccc}
 .board_list thead th:first-child{background-image:none}
 .board_list thead th {border-bottom:1px solid #ccc;padding:12px 0 13px 0;color:#3b3a3a;vertical-align:middle}

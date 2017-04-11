@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- jstl forEach  -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -43,7 +43,6 @@
 .menu-box{
 	height:200px;
 }
-
 </style>
 </head>
 
@@ -62,7 +61,8 @@
 		<button type="button" onclick="location.href='/servlet/advertise/listAll'" class="btn btn-default">광고</button>
 		<button type="submit" onclick="location.href='/servlet/seller/listAll'" class="btn btn-default">판매자</button>
 		<button type="submit" onclick="location.href='/servlet/order/listAll'" class="btn btn-default">주문</button>
-
+		<button type="submit" onclick="location.href='/servlet/crud/multiRead'" class="btn btn-default">데이터관리</button>
+	
 		<div style="width:200px; float:right">
 			<sec:authorize access="isAuthenticated()">
 			<sec:authentication var="user" property="principal"/>
@@ -71,7 +71,6 @@
 			</sec:authorize>
 		</div>
 	</div>
-
 	
 </body>
 </html>

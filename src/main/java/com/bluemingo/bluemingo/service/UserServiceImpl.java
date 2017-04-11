@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import com.bluemingo.bluemingo.generic.GenericServiceImpl;
 import com.bluemingo.bluemingo.persistence.UserDAO;
 
 @Service("userService")
-public class UserServiceImpl extends GenericServiceImpl<UserVO, Integer> implements UserService{
+public class UserServiceImpl extends GenericServiceImpl<UserVO, Integer> implements UserService, UserDetailsService{
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	

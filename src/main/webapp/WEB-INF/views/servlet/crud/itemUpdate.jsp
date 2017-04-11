@@ -76,8 +76,6 @@ function doImageUpload(id){
             }, error: function(jqXHR, textStatus, errorThrown) {}
     	});
     }
-	
-	
 }
 $(document).ready( function() {
 	var purpose = '${msg_purpose}';
@@ -124,10 +122,10 @@ function setNum(){
 
 </head>
 <body>
-<div class="box">
+<div class="box" style="border-top:0px">
 
 <form:form role="form" commandName="Item_companyVO" name="ItemData" method="post" enctype="multipart/form-data">
-	<div class="box-tools">
+	<div class="box-tools" >
 		<h4 class="box-title" style="text-align:center">제품 정보 생성 페이지</h4>
 		
 		<hr />
