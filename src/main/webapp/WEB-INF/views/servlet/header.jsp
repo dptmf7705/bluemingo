@@ -8,15 +8,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
-<%@ page import="com.bluemingo.bluemingo.domain.UserVO" %>
-<%
-Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-Object principal = auth.getPrincipal();
-String name = "";
-if(principal != null && principal instanceof UserVO){
-	name = ((UserVO)principal).getUser_name();
-}
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -74,7 +65,8 @@ if(principal != null && principal instanceof UserVO){
 
 		<div style="width:200px; float:right">
 			<sec:authorize access="isAuthenticated()">
-			<p><%=name%>님 반갑습니다.</p>
+			<sec:authentication var="user" property="principal"/>
+			<p>${user.user_name}님 반갑습니다.</p>
 			<button type="submit" onclick="location.href='/servlet/login/logout'">로그아웃</button>
 			</sec:authorize>
 		</div>

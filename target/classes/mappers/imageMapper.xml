@@ -12,7 +12,6 @@
 	</select>
 
 	
-	
 	<!-- 게시물 조회(bno에 해당하는 단일 게시물 조회) -->
 	<select id="read" resultType="com.bluemingo.bluemingo.domain.ImageVO">
 		select

@@ -51,6 +51,7 @@ public abstract class GenericDAOImpl<E, K extends Serializable> implements Gener
 	public GenericDAOImpl(Class<E> daoType){
 		this.daoType = daoType;
 	}
+	
 	//Default Constructor
 	public GenericDAOImpl(Class<E> daoType, SqlSessionFactory sqlSessionFactory){
 		this.daoType = daoType;
@@ -92,12 +93,12 @@ public abstract class GenericDAOImpl<E, K extends Serializable> implements Gener
     
     @Override
     public SearchVO createProcedure(E vo) {
-    	SqlSession session = sqlSessionFactory.openSession(); 
+    	SqlSession session = sqlSessionFactory.openSession();
    	 	SearchVO result = null;
         try
-        {  	
+        {
         	String query = this.daoType.getName()+MAPPER+"."+PREFIX_PROCEDURE+PREFIX_CREATE;
-        	result = (SearchVO)session.selectOne(query,vo);      
+        	result = (SearchVO)session.selectOne(query,vo);
         }
         finally
         {

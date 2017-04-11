@@ -48,7 +48,7 @@ function onb(a){
 .login_bottom{
 	padding:0px; 
 	width:100%; 
-	float:left
+	float:left;
 }
 </style>
 

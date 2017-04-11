@@ -21,7 +21,7 @@ import com.bluemingo.bluemingo.domain.ImageVO;
 
 @Component("fileUtils")
 public class FileUtils {
-	private static final String filePath = "C:\\Download\\";
+	private static final String filePath = "www/bluemingo/image";
 	//private static final String filePath = "www/bluemingo/image/";
 	
 	public ImageVO parseInsertFileInfo(HttpServletRequest request) throws Exception{
@@ -68,7 +68,7 @@ public class FileUtils {
 	    String originalFileName = ivo.getOriginal_file_name();
 	     
 	    //byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("www/bluemingo/image/"+storedFileName));
-	    byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\Download\\"+storedFileName));
+	    byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("www/bluemingo/image"+storedFileName));
 	    
 	    response.setContentType("application/octet-stream");
 	    response.setContentLength(fileByte.length);

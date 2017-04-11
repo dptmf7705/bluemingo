@@ -1,4 +1,4 @@
-package com.bluemingo.bluemingo.controller;
+package com.bluemingo.bluemingo.login;
 
 import java.io.IOException;
 

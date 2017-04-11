@@ -9,8 +9,13 @@
 -->
 <mapper namespace="com.bluemingo.bluemingo.domain.UserVOMapper">
 
+	<!-- 회원정보 조회 -->
 	<select id="search" resultType="com.bluemingo.bluemingo.domain.UserVO">
 		call user_search(#{search_key});
+	</select>
+
+	<select id="procedure_insert" resultType="com.bluemingo.bluemingo.domain.UserVO">
+		call user_create(#{user_id}, #{user_password}, #{user_name}, #{user_phone});
 	</select>
 	
 </mapper>

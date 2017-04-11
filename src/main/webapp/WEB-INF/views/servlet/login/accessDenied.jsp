@@ -9,9 +9,9 @@
 </head>
 <body>
 <div style="margin:100px; text-align: center">
-	<h1>접근권한이 없습니다.</h1>
+	<h1><font color="red">접근권한이 없습니다.</font></h1>
 	<hr>
-	<h2><a href="/"><font color="blue">홈으로 돌아가기</font></a></h2>
+	<h3><a href="/">홈으로 돌아가기</a></h3>
 </div>
 </body>
 </html>

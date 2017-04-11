@@ -1,9 +1,14 @@
 package com.bluemingo.bluemingo.domain;
 
+
 public class LoginVO {
 	private String loginId;
 	private String loginPassword;
-	
+
+	@Override
+	public String toString() {
+		return "LoginVO [loginId=" + loginId + ", loginPassword=" + loginPassword + "]";
+	}
 	public String getLoginId() {
 		return loginId;
 	}
@@ -16,6 +21,4 @@ public class LoginVO {
 	public void setLoginPassword(String loginPassword) {
 		this.loginPassword = loginPassword;
 	}
-	
-	
 }

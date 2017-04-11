@@ -1,5 +1,6 @@
 package com.bluemingo.bluemingo.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,7 +23,11 @@ public class UserVO implements UserDetails{
 	
 	private String role_name;
 	
-	private List<RoleVO> authorities; // 권한 목록
+	private List<RoleVO> authorities; // 권한 목록 -spring security 관리
+	
+	public UserVO(){
+		authorities = new ArrayList<RoleVO>();
+	}
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -109,6 +114,7 @@ public class UserVO implements UserDetails{
 
 	public void setRole_name(String role_name) {
 		this.role_name = role_name;
+		authorities.add(new RoleVO(role_name));
 	}
 
 	public String getUser_phone() {

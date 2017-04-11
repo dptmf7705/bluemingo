@@ -1,23 +1,22 @@
 package com.bluemingo.bluemingo.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.jaas.SecurityContextLoginModule;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +38,8 @@ import com.bluemingo.bluemingo.service.ImageService;
 import com.bluemingo.bluemingo.service.Item_companyService;
 import com.bluemingo.bluemingo.service.OrderService;
 import com.bluemingo.bluemingo.service.Ref_listService;
+import com.bluemingo.bluemingo.service.UserService;
+import com.mysql.fabric.Response;
 
 @Controller
 @RequestMapping("/servlet/android/*")
@@ -60,6 +61,8 @@ public class AndroidController {
     @Autowired(required = true)
     private Ref_listService ref_listService;
 		
+    @Autowired(required = true)
+    private UserService userService;
 	
 	@RequestMapping(value="/test")
 	public void androidTest() {
@@ -94,30 +97,34 @@ public class AndroidController {
 		return author;
 	}*/
 	
+	/** 안드로이드 로그인 테스트용 */
 	@RequestMapping(value="/loginTest")
 	public void loginTest(){
 		logger.info("android loginTest called ......");
 		
 	}
-	
-	@RequestMapping(value="/login")
-	public String login(@RequestBody LoginVO login){
-		logger.info("android login called ......");
-		return "/servlet/android/loginProcess";
-	}
-	
+
+	/** 로그인 실패 */
 	@RequestMapping(value="/loginFail")
-	@ResponseBody
-	public String loginFail(){
+	public @ResponseBody String loginFail(){
 		logger.info("android login fail ......");
-		
-		return "login fail";
+		String result = "fail";
+		return result;
 	}
 	
+	/** 로그인 성공 */
 	@RequestMapping(value="/loginSuccess")
+	public @ResponseBody String loginSuccess(){
+		logger.info("android login success ......");
+		String result = "success";
+		return result;
+	}
+	
+	/** 로그인 유저 정보 json 출력 - security에서 관리하는 principal 객체 */
+	@RequestMapping(value="/getUserInfo")
 	@ResponseBody
-	public UserVO loginSuccess(){
-		logger.info("android login success.......");
+	public UserVO getPrincipal(){
+		logger.info("android getUser called.......");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserVO user = null;
 		Object principal = auth.getPrincipal();
@@ -126,7 +133,38 @@ public class AndroidController {
 		}
 		return user;
 	}
-
+	
+	/** 회원 가입 */
+	@RequestMapping(value="/createUser")
+	@ResponseBody
+	public UserVO singIn(@RequestBody UserVO uservo){
+		logger.info("android createUser called.......");
+		
+		return userService.insertProcedure(uservo);
+	}
+	
+	@RequestMapping(value="/idCheck")
+	@ResponseBody
+	public int idCheck(@RequestBody String userId){
+		logger.info("android idCheck called.......");
+		SearchVO svo = new SearchVO();
+		svo.setSearch_key(userId);
+		
+		if(userService.search(svo).get(0) != null) 
+			return -1; // 이미 존재하는 id
+		else
+			return 0; // 사용 가능 id
+	}
+	
+	/** json 으로 받은 vo객체 jsp에 넘겨서 자동 submit */
+	@RequestMapping(value="/login")
+	public void doLogin(Model model, @RequestBody LoginVO lvo){
+		logger.info("android login is called......" + lvo.toString());
+		model.addAttribute("loginId", lvo.getLoginId());
+		model.addAttribute("loginPassword", lvo.getLoginPassword());
+	}
+	
+	
 	/** 2017-02-20
 	 * 안드로이드-제품리스트 조회
 	 */

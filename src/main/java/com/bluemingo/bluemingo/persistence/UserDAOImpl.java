@@ -12,4 +12,5 @@ public class UserDAOImpl extends GenericDAOImpl<UserVO, Integer> implements User
 		super(UserVO.class);
 	}
 
+	
 }

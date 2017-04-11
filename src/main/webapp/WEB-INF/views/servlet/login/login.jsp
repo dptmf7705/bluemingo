@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
-<%@ page import="com.bluemingo.bluemingo.domain.UserVO" %>
 <%@include file="../header.jsp" %>
 <script> 
 function onf(a){ 
@@ -55,7 +54,7 @@ function onb(a){
 .login_bottom{
 	padding:0px; 
 	width:100%; 
-	float:left
+	float:left;
 }
 </style>
 
@@ -94,7 +93,7 @@ function onb(a){
 			<div class="login_form">
 				<input type="text" id="loginId" name="loginId" value="아이디" onfocus="onf(this)" onblur="onb(this)"/>
 				<input type="text" id="loginPassword" name="loginPassword" value="비밀번호" onfocus="onf(this)" onblur="onb(this)"/>
-				<input type="checkbox" id="rememberMe"><p style="float:left">아이디 저장</p>
+				<input type="checkbox" id="rememberMe" name="rememberMe"><p style="float:left;">아이디 저장</p>
 				<button type="submit" id="loginBtn">로그인</button>
 			</div>
 			
