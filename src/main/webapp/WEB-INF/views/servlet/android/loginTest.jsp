@@ -62,7 +62,7 @@ function onb(a){
 	<div class="box_login">
 		<h3>로그인</h3>
 		<hr>
-		<form method="POST" action="/servlet/android/loginProcess">
+		<form method="POST" action="/servlet/android/login">
 		<div class="login_form">
 				<input type="text" id="loginId" name="loginId" value="아이디" onfocus="onf(this)" onblur="onb(this)"/>
 				<input type="text" id="loginPassword" name="loginPassword" value="비밀번호" onfocus="onf(this)" onblur="onb(this)"/>

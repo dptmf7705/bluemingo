@@ -4,7 +4,14 @@ package com.bluemingo.bluemingo.domain;
 public class LoginVO {
 	private String loginId;
 	private String loginPassword;
+	private String messege;
 
+	public String getMessege() {
+		return messege;
+	}
+	public void setMessege(String messege) {
+		this.messege = messege;
+	}
 	@Override
 	public String toString() {
 		return "LoginVO [loginId=" + loginId + ", loginPassword=" + loginPassword + "]";

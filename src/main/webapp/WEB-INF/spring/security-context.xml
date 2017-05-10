@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<http pattern="/**/*.js" security="none" />
@@ -21,14 +21,15 @@
 		<csrf disabled="true"/>
 		<intercept-url pattern="/" access="permitAll" />
 		<intercept-url pattern="/servlet/login/**" access="permitAll" />
-		<intercept-url pattern="/servlet/android/login*" access="permitAll"/>
-		<intercept-url pattern="/servlet/android/*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+		<intercept-url pattern="/servlet/android/*" access="permitAll"/>
+<!-- 		<intercept-url pattern="/servlet/android/login*" access="permitAll"/> -->
+<!-- 		<intercept-url pattern="/servlet/android/*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/> -->
 		<intercept-url pattern="/servlet/**" access="hasRole('ROLE_ADMIN')" />
 		<form-login
 			username-parameter="loginId"
 			password-parameter="loginPassword" 
 			login-page="/servlet/android/loginTest"
-			login-processing-url="/servlet/android/loginProcess"
+			login-processing-url="/servlet/android/login"
 			default-target-url="/servlet/android/loginSuccess"
 			authentication-failure-url="/servlet/android/loginFail"/>
 		<logout

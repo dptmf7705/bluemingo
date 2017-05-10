@@ -2,8 +2,10 @@ package com.bluemingo.bluemingo.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -103,17 +105,19 @@ public class AndroidController {
 
 	/** 로그인 실패 */
 	@RequestMapping(value="/loginFail")
-	public @ResponseBody String loginFail(){
+	public @ResponseBody HashMap<String, String> loginFail(){
 		logger.info("android login fail ......");
-		String result = "fail";
+		HashMap<String, String> result = new HashMap<String, String>();
+		result.put("messege", "fail");
 		return result;
 	}
 	
 	/** 로그인 성공 */
 	@RequestMapping(value="/loginSuccess")
-	public @ResponseBody String loginSuccess(){
-		logger.info("android login success ......");
-		String result = "success";
+	public @ResponseBody HashMap<String, String> loginSuccess(){
+		logger.info("android loginSuccess called.......");
+		HashMap<String, String> result = new HashMap<String, String>();
+		result.put("messege", "success");
 		return result;
 	}
 	
@@ -152,15 +156,6 @@ public class AndroidController {
 		else
 			return 0; // 사용 가능 id
 	}
-	
-	/** json 으로 받은 vo객체 jsp에 넘겨서 자동 submit */
-	@RequestMapping(value="/login")
-	public void doLogin(Model model, @RequestBody LoginVO lvo){
-		logger.info("android login is called......" + lvo.toString());
-		model.addAttribute("loginId", lvo.getLoginId());
-		model.addAttribute("loginPassword", lvo.getLoginPassword());
-	}
-
 	
 
 	/** 2017-02-20
